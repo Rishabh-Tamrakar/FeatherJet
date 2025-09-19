@@ -3,271 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ VelocityTasks - Ultra-Fast Task Management</title>
-    <meta name="description" content="Ultra-lightweight task management web application built with Go and vanilla JavaScript">
-    <meta name="author" content="Rishabh Tamrakar">
-    <meta name="keywords" content="task management, productivity, lightweight, fast, go, javascript">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/animations.css">
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="js/app.js" as="script">
-    <link rel="preload" href="js/api.js" as="script">
-    <link rel="preload" href="js/ui.js" as="script">
+    <title>FeatherJet - Lightweight Web Server</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Loading Spinner -->
-    <div id="loading-spinner" class="loading-spinner">
-        <div class="spinner"></div>
-        <p>Loading VelocityTasks...</p>
-    </div>
+    <header>
+        <nav>
+            <div class="nav-brand">
+                <h1>🚀 FeatherJet</h1>
+                <p>Lightweight Web Server</p>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#api">API</a></li>
+                <li><a href="#docs">Docs</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <!-- Main Application Container -->
-    <div id="app" class="app-container" style="display: none;">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <div class="logo-section">
-                    <h1 class="app-title">
-                        <span class="lightning">⚡</span>
-                        VelocityTasks
-                    </h1>
-                    <p class="app-subtitle">Ultra-Fast Task Management</p>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Fast, Simple, Cross-Platform</h2>
+                <p>FeatherJet is a lightweight web server written in Go, designed to serve static files and backend APIs with minimal configuration.</p>
+                <div class="hero-buttons">
+                    <button onclick="testAPI()" class="btn btn-primary">Test API</button>
+                    <button onclick="getServerInfo()" class="btn btn-secondary">Server Info</button>
                 </div>
-                
-                <!-- Statistics Dashboard -->
-                <div class="stats-dashboard">
-                    <div class="stat-card">
-                        <span class="stat-number" id="total-tasks">0</span>
-                        <span class="stat-label">Total</span>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h3>Key Features</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🌐 Static File Serving</h4>
+                        <p>Efficiently serve HTML, CSS, JS, and other static assets with proper caching headers.</p>
                     </div>
-                    <div class="stat-card">
-                        <span class="stat-number" id="completed-tasks">0</span>
-                        <span class="stat-label">Completed</span>
+                    <div class="feature-card">
+                        <h4>🔗 REST API Support</h4>
+                        <p>Built-in routing for REST endpoints with JSON responses and middleware support.</p>
                     </div>
-                    <div class="stat-card">
-                        <span class="stat-number" id="pending-tasks">0</span>
-                        <span class="stat-label">Pending</span>
+                    <div class="feature-card">
+                        <h4>⚙️ Configurable</h4>
+                        <p>Easy configuration via YAML files for ports, directories, logging, and middleware.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔒 Security Headers</h4>
+                        <p>Built-in security middleware with CORS support and common security headers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📊 Request Logging</h4>
+                        <p>Comprehensive request logging with method, path, status code, and response time.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🚀 Cross-Platform</h4>
+                        <p>Runs seamlessly on Linux, Windows, and macOS with zero dependencies.</p>
                     </div>
                 </div>
             </div>
-        </header>
+        </section>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Task Creation Section -->
-            <section class="task-creation">
-                <div class="creation-container">
-                    <form id="task-form" class="task-form">
-                        <div class="form-row">
-                            <div class="input-group">
-                                <input 
-                                    type="text" 
-                                    id="task-title" 
-                                    placeholder="Enter task title..." 
-                                    maxlength="200"
-                                    required
-                                    aria-label="Task title"
-                                >
-                            </div>
-                            
-                            <div class="select-group">
-                                <select id="task-priority" aria-label="Task priority">
-                                    <option value="low">Low Priority</option>
-                                    <option value="medium">Medium Priority</option>
-                                    <option value="high">High Priority</option>
-                                </select>
-                            </div>
-                            
-                            <button type="submit" class="add-btn" aria-label="Add new task">
-                                <span class="btn-text">Add Task</span>
-                                <span class="btn-icon">+</span>
-                            </button>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="input-group description-group">
-                                <textarea 
-                                    id="task-description" 
-                                    placeholder="Task description (optional)..." 
-                                    maxlength="1000"
-                                    rows="2"
-                                    aria-label="Task description"
-                                ></textarea>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </section>
-
-            <!-- Search and Filter Section -->
-            <section class="search-filter">
-                <div class="search-container">
-                    <div class="search-input-wrapper">
-                        <input 
-                            type="search" 
-                            id="search-input" 
-                            placeholder="Search tasks..." 
-                            aria-label="Search tasks"
-                        >
-                        <span class="search-icon">🔍</span>
+        <section id="api" class="api-section">
+            <div class="container">
+                <h3>API Endpoints</h3>
+                <div class="api-list">
+                    <div class="api-item">
+                        <span class="method get">GET</span>
+                        <code>/api/hello</code>
+                        <span class="description">Simple hello world endpoint</span>
                     </div>
-                    
-                    <div class="filter-tabs">
-                        <button class="filter-tab active" data-filter="all" aria-pressed="true">
-                            All Tasks
-                        </button>
-                        <button class="filter-tab" data-filter="pending" aria-pressed="false">
-                            Pending
-                        </button>
-                        <button class="filter-tab" data-filter="in_progress" aria-pressed="false">
-                            In Progress
-                        </button>
-                        <button class="filter-tab" data-filter="completed" aria-pressed="false">
-                            Completed
-                        </button>
-                        <button class="filter-tab priority-filter" data-filter="high" aria-pressed="false">
-                            High Priority
-                        </button>
+                    <div class="api-item">
+                        <span class="method get">GET</span>
+                        <code>/api/status</code>
+                        <span class="description">Server health and status check</span>
+                    </div>
+                    <div class="api-item">
+                        <span class="method get">GET</span>
+                        <code>/api/info</code>
+                        <span class="description">Detailed server configuration info</span>
                     </div>
                 </div>
-            </section>
-
-            <!-- Tasks List Section -->
-            <section class="tasks-section">
-                <div class="tasks-container">
-                    <!-- Empty State -->
-                    <div id="empty-state" class="empty-state">
-                        <div class="empty-icon">📝</div>
-                        <h3>No tasks yet</h3>
-                        <p>Create your first task to get started!</p>
-                    </div>
-
-                    <!-- Tasks Grid -->
-                    <div id="tasks-grid" class="tasks-grid">
-                        <!-- Tasks will be dynamically inserted here -->
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-content">
-                <p>&copy; 2025 VelocityTasks - Powered by FeatherJet</p>
-                <div class="footer-links">
-                    <a href="/health" target="_blank" aria-label="Health check">Health</a>
-                    <a href="https://github.com/rishabh-tamrakar/velocitytasks" target="_blank" aria-label="GitHub repository">GitHub</a>
-                    <span class="version">v1.0.0</span>
-                </div>
             </div>
-        </footer>
-    </div>
+        </section>
 
-    <!-- Task Modal for Editing -->
-    <div id="task-modal" class="modal" style="display: none;" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
-        <div class="modal-overlay" aria-hidden="true"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modal-title">Edit Task</h2>
-                <button class="modal-close" aria-label="Close modal">&times;</button>
+        <section class="response-section">
+            <div class="container">
+                <h3>API Response</h3>
+                <pre id="api-response" class="response-box">Click "Test API" or "Server Info" to see responses here...</pre>
             </div>
-            
-            <div class="modal-body">
-                <form id="edit-task-form">
-                    <input type="hidden" id="edit-task-id">
-                    
-                    <div class="form-group">
-                        <label for="edit-task-title">Title</label>
-                        <input 
-                            type="text" 
-                            id="edit-task-title" 
-                            maxlength="200"
-                            required
-                        >
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="edit-task-description">Description</label>
-                        <textarea 
-                            id="edit-task-description" 
-                            maxlength="1000"
-                            rows="3"
-                        ></textarea>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="edit-task-priority">Priority</label>
-                            <select id="edit-task-priority">
-                                <option value="low">Low Priority</option>
-                                <option value="medium">Medium Priority</option>
-                                <option value="high">High Priority</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="edit-task-status">Status</label>
-                            <select id="edit-task-status">
-                                <option value="pending">Pending</option>
-                                <option value="in_progress">In Progress</option>
-                                <option value="completed">Completed</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="cancel-edit">Cancel</button>
-                <button type="submit" form="edit-task-form" class="btn btn-primary">Save Changes</button>
-            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 FeatherJet - Open Source Web Server</p>
+            <p>Built with ❤️ and Go</p>
         </div>
-    </div>
+    </footer>
 
-    <!-- Toast Notifications -->
-    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true">
-        <!-- Toast notifications will be inserted here -->
-    </div>
-
-    <!-- Confirmation Dialog -->
-    <div id="confirm-dialog" class="modal" style="display: none;" role="dialog" aria-labelledby="confirm-title" aria-hidden="true">
-        <div class="modal-overlay" aria-hidden="true"></div>
-        <div class="modal-content confirm-dialog">
-            <div class="modal-header">
-                <h2 id="confirm-title">Confirm Action</h2>
-            </div>
-            
-            <div class="modal-body">
-                <p id="confirm-message">Are you sure you want to perform this action?</p>
-            </div>
-            
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="confirm-cancel">Cancel</button>
-                <button type="button" class="btn btn-danger" id="confirm-ok">Confirm</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script src="js/api.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/app.js"></script>
-
-    <!-- Service Worker Registration (for future PWA features) -->
-    <script>
-        // Register service worker if supported
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                // Future: Register service worker for offline functionality
-                // navigator.serviceWorker.register('/sw.js');
-            });
-        }
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
