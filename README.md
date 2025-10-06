@@ -16,7 +16,7 @@ FeatherJet fills the gap between heavyweight application servers and basic stati
 - **Zero Dependencies**: Uses only Go standard library (except for YAML parsing)
 - **Lightweight**: Minimal resource usage and fast startup times
 - **Configurable**: Easy YAML-based configuration for all aspects
-- **Production Ready**: Includes logging, security headers, graceful shutdown
+- **Production Ready**: Includes logging, metrics, rate limiting, security headers, and graceful shutdown
 
 ### How It's Different
 
@@ -374,6 +374,21 @@ git push origin feature/your-feature-name
 
 ### Built-in Endpoints
 
+#### `GET /metrics`
+Prometheus metrics endpoint for monitoring.
+
+**Response:**
+```text
+# HELP http_requests_total Total number of HTTP requests
+# TYPE http_requests_total counter
+http_requests_total{method="GET",path="/api/hello",status="200"} 24
+
+# HELP http_request_duration_seconds HTTP request duration in seconds
+# TYPE http_request_duration_seconds histogram
+http_request_duration_seconds_bucket{method="GET",path="/api/hello",le="0.005"} 18
+...
+```
+
 #### `GET /api/hello`
 Simple hello world endpoint for testing.
 
@@ -433,9 +448,11 @@ Detailed server configuration and runtime information.
 
 - **Security Headers**: X-Content-Type-Options, X-Frame-Options, X-XSS-Protection
 - **CORS Support**: Configurable Cross-Origin Resource Sharing
+- **Rate Limiting**: IP-based rate limiting to prevent abuse
 - **Input Validation**: Request validation and sanitization
 - **Timeouts**: Configurable request/response timeouts
 - **Static File Security**: Directory traversal protection
+- **Metrics**: Prometheus metrics for monitoring and alerting
 
 ### Security Best Practices
 
@@ -512,10 +529,7 @@ SOFTWARE.
 ```
 
 ## 🙏 Acknowledgments
-
-- **Go Team**: For creating an excellent programming language
-- **Community**: For feedback, contributions, and support
-- **Inspiration**: Apache Tomcat, NGINX, and other web servers
+- **[Sakshi Pachlaniya](https://github.com/SakshiP3103)**: For contributions, testing, and valuable feedback
 
 ---
 

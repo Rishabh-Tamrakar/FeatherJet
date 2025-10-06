@@ -60,6 +60,9 @@ func (s *Server) setupRoutes() {
 	s.mux.HandleFunc("/api/info", s.handleInfo)
 	s.mux.HandleFunc("/api/tasks/", s.handleTasksProxy)
 	s.mux.HandleFunc("/api/tasks", s.handleTasksProxy)  // Proxy to VelocityTasks
+	
+	// Add metrics endpoint
+	s.mux.Handle("/metrics", promhttp.Handler())
 
 	// Static file handler
 	staticHandler := s.createStaticFileHandler()
@@ -73,17 +76,35 @@ func (s *Server) setupMiddleware() {
 	// Add security headers
 	handler = middleware.Security(handler)
 
+	// Add rate limiting
+	handler = middleware.RateLimitMiddleware(handler)
+
+	// Add request logging
+	handler = middleware.RequestLoggerMiddleware(handler)
+
 	// Add CORS if enabled
 	if s.config.Middleware.EnableCORS {
 		handler = middleware.CORS(handler)
 	}
 
-	// Add request logging if enabled
-	if s.config.Logging.EnableRequestLogging {
-		handler = middleware.Logger(handler)
-	}
+	// Add metrics middleware
+	handler = s.metricsMiddleware(handler)
 
 	s.httpServer.Handler = handler
+}
+
+// metricsMiddleware wraps handlers with Prometheus metrics
+func (s *Server) metricsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		rw := &middleware.StatusRecorder{ResponseWriter: w, Status: http.StatusOK}
+
+		next.ServeHTTP(rw, r)
+
+		duration := time.Since(start).Seconds()
+		metrics.RequestsTotal.WithLabelValues(r.Method, r.URL.Path, fmt.Sprint(rw.Status)).Inc()
+		metrics.RequestDuration.WithLabelValues(r.Method, r.URL.Path).Observe(duration)
+	})
 }
 
 // createStaticFileHandler creates a handler for serving static files
