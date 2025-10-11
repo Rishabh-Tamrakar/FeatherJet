@@ -62,8 +62,38 @@ function showLoading() {
     apiResponseElement.style.color = '#a0aec0';
 }
 
+// Theme management
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    
+    const icon = document.getElementById('theme-toggle-icon');
+    const text = document.getElementById('theme-toggle-text');
+    
+    if (theme === 'dark') {
+        icon.textContent = '🌙';
+        text.textContent = 'Dark';
+    } else {
+        icon.textContent = '🌞';
+        text.textContent = 'Light';
+    }
+}
+
+function toggleTheme() {
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+}
+
 // Add some interactivity to the page
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize theme
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+    
+    // Add theme toggle event listener
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', toggleTheme);
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
     navLinks.forEach(link => {
