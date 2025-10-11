@@ -16,8 +16,8 @@
     /* Dark theme */
     --bg-primary: #1a1a1a;
     --bg-secondary: #2d2d2d;
-    --text-primary: #e0e0e0;
-    --text-secondary: #b0b0b0;
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
     --card-bg: #2d2d2d;
     --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     --code-bg: #3a3a3a;
@@ -221,39 +221,55 @@ nav {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 1rem;
+    padding: 1.5rem;
     background: var(--bg-primary);
     border-radius: 8px;
     margin-bottom: 1rem;
     box-shadow: var(--card-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.api-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow), 0 0 15px rgba(102, 126, 234, 0.3);
+    border-color: rgba(102, 126, 234, 0.5);
 }
 
 .method {
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 6px 12px;
+    border-radius: 6px;
     font-weight: bold;
-    font-size: 0.8rem;
-    min-width: 60px;
+    font-size: 0.9rem;
+    min-width: 70px;
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .method.get {
     background: #4caf50;
     color: white;
+    border: 1px solid #45a049;
 }
 
 .api-item code {
-    background: #f1f3f4;
-    padding: 4px 8px;
-    border-radius: 4px;
+    background: var(--code-bg);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: 6px;
     font-family: 'Courier New', monospace;
     font-weight: 600;
-    min-width: 120px;
+    min-width: 140px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .description {
-    color: #666;
+    color: var(--text-secondary);
     flex: 1;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 /* Response Section */
