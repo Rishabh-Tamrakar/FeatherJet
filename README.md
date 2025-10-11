@@ -4,60 +4,48 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Cross Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey.svg)]()
 
-**FeatherJet** is a lightweight, fast, and minimalistic web server written in Go. Designed to be a simple alternative to Apache Tomcat, FeatherJet can seamlessly serve static files and host backend applications with REST APIs across Linux, Windows, and macOS.
+**FeatherJet** is a modern, lightweight web server written in Go, perfect for serving static websites and REST APIs. Think of it as a simple, fast alternative to heavyweight servers, with minimal configuration needed.
 
-## 📖 About FeatherJet
+## ✨ Key Features
 
-FeatherJet fills the gap between heavyweight application servers and basic static file servers. It provides:
+- 🌐 **Serve Static Files**: HTML, CSS, JavaScript, images - all with proper caching
+- 🔄 **REST API Support**: Built-in handlers for JSON APIs
+- 📱 **Modern UI**: Clean interface with light/dark mode support
+- 🛠️ **Easy Configuration**: Simple YAML files - no complex setups
+- 🔒 **Security Ready**: CORS, security headers, and rate limiting included
+- 🚀 **Fast & Light**: ~10MB memory usage, <1s startup time
+- 📊 **Built-in Logging**: Request tracking and error monitoring
+- 💻 **Cross-Platform**: One binary for Linux, Windows, and macOS
 
-- **Static File Serving**: Efficiently serve HTML, CSS, JavaScript, images, and other static assets
-- **REST API Support**: Built-in routing for backend endpoints with JSON responses  
-- **Cross-Platform**: Single binary that runs on Linux, Windows, and macOS
-- **Zero Dependencies**: Uses only Go standard library (except for YAML parsing)
-- **Lightweight**: Minimal resource usage and fast startup times
-- **Configurable**: Easy YAML-based configuration for all aspects
-- **Production Ready**: Includes logging, metrics, rate limiting, security headers, and graceful shutdown
+## 🏃‍♂️ Quick Start
 
-### How It's Different
+1. **Download & Run:**
+   ```bash
+   # Clone the repo
+   git clone https://github.com/featherjet/featherjet.git
+   cd featherjet
 
-| Feature | FeatherJet | Apache Tomcat | NGINX |
-|---------|------------|---------------|-------|
-| **Language** | Go | Java | C |
-| **Memory Usage** | ~10-20MB | ~100-500MB | ~5-15MB |
-| **Startup Time** | <1s | 5-30s | <1s |
-| **Configuration** | Simple YAML | Complex XML | Complex conf files |
-| **API Development** | Built-in Go handlers | Java servlets/Spring | Reverse proxy only |
-| **Static Files** | ✅ Native | ✅ Via deployment | ✅ Optimized |
-| **Cross Platform** | ✅ Single binary | ✅ Requires JVM | ✅ Platform specific |
+   # Build and run
+   go build ./cmd/featherjet
+   ./featherjet
+   ```
 
-## 📂 Repository Structure
+2. **Visit your site:**
+   - Open http://localhost:8081
+   - Try the demo page with dark mode support
+   - Check API endpoints at /api/hello
+
+## � Project Structure
 
 ```
 FeatherJet/
-├── cmd/
-│   └── featherjet/          # Main application entrypoint
-│       └── main.go          # Server startup and graceful shutdown
-├── internal/
-│   ├── server/              # Core HTTP server logic
-│   │   └── server.go        # Routes, handlers, static file serving
-│   ├── config/              # Configuration management
-│   │   └── config.go        # YAML config loading and validation
-│   └── middleware/          # Reusable HTTP middlewares
-│       └── middleware.go    # Logging, CORS, security headers
-├── public/                  # Default static files directory
-│   ├── index.html          # Demo homepage
-│   ├── styles.css          # Demo styling
-│   └── app.js              # Demo JavaScript
-├── examples/                # Example applications
-│   ├── README.md           # Examples documentation
-│   └── todo-app/           # Simple todo application
-├── tests/                   # Unit and integration tests
-│   ├── server_test.go      # Server functionality tests
-│   └── config_test.go      # Configuration tests
-├── config.yaml             # Default server configuration
-├── go.mod                  # Go module definition
-├── go.sum                  # Go module checksums
-└── README.md               # This file
+├── cmd/featherjet/          # Main application
+├── internal/                # Core logic
+│   ├── server/             # HTTP server & handlers
+│   ├── config/             # Configuration
+│   └── middleware/         # HTTP middlewares
+├── public/                 # Demo website
+└── config.yaml            # Main config file
 ```
 
 ## ⚙️ Setup Instructions
@@ -500,38 +488,9 @@ Approximate performance on a modern server:
    echo 'net.core.somaxconn = 1024' >> /etc/sysctl.conf
    ```
 
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License
-
-Copyright (c) 2025 FeatherJet Contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
-
-## 🙏 Acknowledgments
-- **[Sakshi Pachlaniya](https://github.com/SakshiP3103)**: For contributions, testing, and valuable feedback
+##  Acknowledgments
+- **[Sakshi Pachlaniya](https://github.com/SakshiP3103)**: Core contributor
 
 ---
 
-
-**Happy serving with FeatherJet! 🚀**
+**Start serving with FeatherJet! 🚀**
