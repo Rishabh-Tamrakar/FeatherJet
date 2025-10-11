@@ -60,7 +60,7 @@ func (s *Server) setupRoutes() {
 	s.mux.HandleFunc("/api/info", s.handleInfo)
 	s.mux.HandleFunc("/api/tasks/", s.handleTasksProxy)
 	s.mux.HandleFunc("/api/tasks", s.handleTasksProxy)  // Proxy to VelocityTasks
-
+	
 	// Static file handler
 	staticHandler := s.createStaticFileHandler()
 	s.mux.Handle("/", staticHandler)
@@ -73,14 +73,12 @@ func (s *Server) setupMiddleware() {
 	// Add security headers
 	handler = middleware.Security(handler)
 
+	// Add request logging
+	handler = middleware.RequestLogger(handler)
+
 	// Add CORS if enabled
 	if s.config.Middleware.EnableCORS {
 		handler = middleware.CORS(handler)
-	}
-
-	// Add request logging if enabled
-	if s.config.Logging.EnableRequestLogging {
-		handler = middleware.Logger(handler)
 	}
 
 	s.httpServer.Handler = handler
