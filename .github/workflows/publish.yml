@@ -1,0 +1,34 @@
+name: Publish Package
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8ade135a41bc03ea98937b1342ad9f22f5f19b1c # v4.1.0
+
+      - name: Set up Go
+        uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4.1.0
+        with:
+          go-version: '1.21'
+
+      - name: Build
+        run: |
+          go mod download
+          go build ./...
+
+      - name: Run tests
+        run: go test -v ./...
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v0.1.15
+        with:
+          files: |
+            releases/featherjet-linux-amd64
+            releases/featherjet-windows-amd64.exe
+            releases/featherjet-darwin-amd64
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
